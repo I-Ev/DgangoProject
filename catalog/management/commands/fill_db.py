@@ -16,8 +16,10 @@ class Command(BaseCommand):
             categories_for_create=[]
             products_for_create=[]
             for i in data:
-                categories_for_create.append(Category(**i))
-                products_for_create.append(Product(**i))
+                if i['model'] == 'catalog.category':
+                    categories_for_create.append(Category(**i))
+                elif i['model'] == 'catalog.product':
+                    products_for_create.append(Product(**i))
 
             Category.objects.bulk_create(categories_for_create)
             Product.objects.bulk_create(products_for_create)
