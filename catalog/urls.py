@@ -11,5 +11,6 @@ urlpatterns = [
     path('', home, name='index'),
     path('home/', home, name='home'),
     path('contacts/', contacts, name='contacts'),
-    path('product/', product, name='product'),
+    # path('product/', product, name='product'),
+    path('products/<int:category_id>/', product, name='product'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
