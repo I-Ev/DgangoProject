@@ -1,16 +1,19 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, TemplateView
 
 from catalog.models import Category, Product
 
 
-# Create your views here.
-def home(request):
-    context = {
-        'object_list': Product.objects.all(),
-        'title': 'Интернет-магазин электроники',
-        'sub_title': 'Здесь вы найдете только самое лучшее'
-    }
-    return render(request, 'catalog/home.html', context)
+class HomeView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'object_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Интернет-магазин электроники'
+        context['sub_title'] = 'Здесь вы найдете только самое лучшее'
+        return context
 
 
 def contacts(request):
@@ -22,27 +25,30 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-def product(request, product_id):
-    product_ = Product.objects.get(id=product_id)
-    context = {
-        'object': product_,
-        'title': product_.name
-    }
-    return render(request, 'catalog/product.html', context)
-
-def categories(request):
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'Категории товаров'
-    }
-    return render(request, 'catalog/categories.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product.html'
 
 
-def products_categ(request, category_id):
-    category = Category.objects.get(id=category_id)
-    products = Product.objects.filter(category=category)
-    context = {
-        'object_list': products,
-        'title': category.name
-    }
-    return render(request, 'catalog/products_categ.html', context)
+class CategoriesListView(ListView):
+    model = Category
+    template_name = 'catalog/categories.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Категории товаров'
+        return context
+
+
+class ProductsCategListView(ListView):
+    model = Product
+    template_name = 'catalog/products_categ.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category=self.kwargs['category_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(id=self.kwargs['category_id'])
+        context['title'] = category.name
+        return context
