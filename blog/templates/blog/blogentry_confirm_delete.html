@@ -1,7 +1,7 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <div class="row-12">
+    <div class="row-12" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-6 mt-5">
                 <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
@@ -9,15 +9,9 @@
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-success">
-                                {% if object %}
-                                    Сохранить
-                                {% else %}
-                                    Создать
-                                {% endif %}
-
-                            </button>
+                            <p>Хотите удалить эту запись - '{{ object.title }}'?</p>
+                            <button type="submit" class="btn btn-success">Подтвердить</button>
+                            <a href='{% url 'blog:list' %}' class="btn btn-warning">Отмена</a>
 
 
                         </form>

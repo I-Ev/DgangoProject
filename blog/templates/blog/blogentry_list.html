@@ -1,8 +1,6 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    </div>
 
     <div class="container">
         <a href="{% url 'blog:create' %}" type="button"
@@ -20,15 +18,12 @@
                                 <li>{{ object.body|truncatechars:35 }}</li>
                             </ul>
 
-                            <div class="btn-group">
-                                <a href="{% url 'blog:detail' object.pk %}" type="button"
-                                   class="btn btn-sm btn-block btn-outline-secondary">Подробнее</a>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <a href="{% url 'blog:detail' object.pk %}" class="btn btn-secondary" role="button">Подробнее</a>
+                                <a href="{% url 'blog:edit' object.pk %}" class="btn btn-secondary" role="button">Изменить</a>
+                                <a href="{% url 'blog:delete' object.pk %}" class="btn btn-secondary" role="button">Удалить</a>
 
                             </div>
-                            {#                            <a href="{% url 'blog:edit' object.id %}" type="button"#}
-                            {#                               class="btn btn-lg btn-block btn-outline-primary">Изменить</a>#}
-                            {#                            <a href="{% url 'blog:delete' object.id %}" type="button"#}
-                            {#                               class="btn btn-lg btn-block btn-outline-primary">Удалить</a>#}
 
                         </div>
                     </div>
