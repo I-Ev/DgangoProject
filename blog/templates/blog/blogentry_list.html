@@ -5,25 +5,31 @@
     </div>
 
     <div class="container">
-        <div class="row text-center">
+        <a href="{% url 'blog:create' %}" type="button"
+           class="btn btn-md btn-w-50 btn-outline-primary ">Создать</a>
+        <div class="row text-center mt-4">
+            <br>
             {% for object in object_list %}
-                <div class="col-3">
+                <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">{{ object.name|truncatechars:30}}</h4>
+                            <h4 class="my-0 font-weight-normal">{{ object.title|truncatechars:30 }}</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                                <li>{{ object.description|truncatechars:35}}</li>
+                                <li>{{ object.body|truncatechars:35 }}</li>
                             </ul>
-                            <a href="{% url 'blog:list' object.id %}" type="button"
-                               class="btn btn-lg btn-block btn-outline-primary">Подробнее</a>
-{#                            <a href="{% url 'blog:create' object.id %}" type="button"#}
-{#                               class="btn btn-lg btn-block btn-outline-primary">Создать</a>#}
-{#                            <a href="{% url 'blog:edit' object.id %}" type="button"#}
-{#                               class="btn btn-lg btn-block btn-outline-primary">Изменить</a>#}
-{#                            <a href="{% url 'blog:delete' object.id %}" type="button"#}
-{#                               class="btn btn-lg btn-block btn-outline-primary">Удалить</a>#}
+
+                            <div class="btn-group">
+                                <a href="{% url 'blog:detail' object.pk %}" type="button"
+                                   class="btn btn-sm btn-block btn-outline-secondary">Подробнее</a>
+
+                            </div>
+                            {#                            <a href="{% url 'blog:edit' object.id %}" type="button"#}
+                            {#                               class="btn btn-lg btn-block btn-outline-primary">Изменить</a>#}
+                            {#                            <a href="{% url 'blog:delete' object.id %}" type="button"#}
+                            {#                               class="btn btn-lg btn-block btn-outline-primary">Удалить</a>#}
+
                         </div>
                     </div>
                 </div>

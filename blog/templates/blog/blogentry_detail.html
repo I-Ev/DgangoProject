@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">{{ object.title }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="card mb-4 box-shadow">
+                    <img src="{{ object.preview|mediapath }}" style="max-height: 150px;">
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-6 col-sm-12">
+                <div class="card mb-4 box-shadow">
+                    <p class="text-secondary">Дата публикации {{ object.created_date }}</p>
+                    <div class="card-body">
+                        <samp>{{ object.body }}</samp><br>
+
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark">Просмотры: {{ object.cout_views }}</button>
+
+        </div>
+    </div>
+
+
+{% endblock %}
