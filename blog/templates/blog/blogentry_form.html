@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="row-12">
+        <div class="row">
+            <div class="col-6 mt-5">
+                <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
+
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">Создать</button>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
