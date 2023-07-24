@@ -6,7 +6,7 @@ from catalog.models import NULLABLE
 # Create your models here.
 class BlogEntry(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок')
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=200, **NULLABLE, verbose_name='Slug')
     body = models.TextField(verbose_name='Содержимое')
     preview = models.ImageField(upload_to='blogs/', **NULLABLE, verbose_name='Превью')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
