@@ -5,26 +5,44 @@
     <div class="container">
         <nav class="ms-auto my-2 my-md-0">
             <a href="{% url 'mailing:client_create' %}" type="button" style="margin-right: 10px"
-               class="btn btn-md btn-w-50 btn-outline-primary">Создать рассылку</a>
+               class="btn btn-md btn-w-50 btn-outline-primary">Новый клиент</a>
 
         </nav>
         <br>
         <div class="container">
             <div class="row text-center">
                 {% for object in object_list %}
-                    <div class="col-3">
-                        <div class="card mb-4 box-shadow">
-                            <div class="card-header">
-                                <h4 class="my-0 font-weight-normal">{{ object.pk }}</h4>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">{{ object.pk }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                                <li>{{ object.surname }} {{ object.name }} {{ object.patrony }}</li>
+                                <li>{{ object.email }}</li>
+                            </ul>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-outline-primary"
+                                        href="{% url 'mailing:client_view' object.pk %}">Подробнее
+                                </button>
+                                <button type="button" class="btn btn-outline-warning"
+                                        href="{% url 'mailing:client_update' object.pk %}">Изменить
+                                </button>
+                                <button type="button" class="btn btn-outline-danger"
+                                        href="{% url 'mailing:client_delete' object.pk %}">Удалить
+                                </button>
                             </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                                    <li>{{ object.surname }} {{ object.name }} {{ object.patrony }}</li>
-                                    <li>{{ object.email }}</li>
-                                </ul>
-                                <a href="{% url 'mailing:client_view' object.id %}" type="button"
-                                   class="btn btn-sm btn-block btn-outline-primary">Подробнее</a>
-                            </div>
+                            <style>
+                                .btn-group .btn {
+                                    margin: 10px;
+                                }
+                            </style>
+
+                            <style>
+                                .card {
+                                    margin: 10px;
+                                }
+                            </style>
                         </div>
                     </div>
                 {% endfor %}
