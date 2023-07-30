@@ -11,6 +11,7 @@
         <br>
         <div class="container">
             <div class="row text-center">
+
                 {% for object in object_list %}
                     <div class="card mb-4">
                         <div class="card-header">
@@ -21,22 +22,17 @@
                                 <li>{{ object.surname }} {{ object.name }} {{ object.patrony }}</li>
                                 <li>{{ object.email }}</li>
                             </ul>
-                            <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-outline-primary"
-                                        href="{% url 'mailing:client_view' object.pk %}">Подробнее
-                                </button>
-                                <button type="button" class="btn btn-outline-warning"
-                                        href="{% url 'mailing:client_update' object.pk %}">Изменить
-                                </button>
-                                <button type="button" class="btn btn-outline-danger"
-                                        href="{% url 'mailing:client_delete' object.pk %}">Удалить
-                                </button>
+
+                            <div class="d-flex">
+                                <a href="{% url 'mailing:client_view' object.pk %}"
+                                   class="btn btn-sm btn-outline-primary flex-grow-0 mr-2">Подробнее</a>
+
+                                <a href="{% url 'mailing:client_update' object.pk %}"
+                                   class="btn btn-sm btn-outline-warning flex-grow-0 mr-2">Изменить</a>
+
+                                <a href="{% url 'mailing:client_delete' object.pk %}"
+                                   class="btn btn-sm btn-outline-danger flex-grow-0">Удалить</a>
                             </div>
-                            <style>
-                                .btn-group .btn {
-                                    margin: 10px;
-                                }
-                            </style>
 
                             <style>
                                 .card {
