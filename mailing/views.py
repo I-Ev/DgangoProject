@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from pytils.translit import slugify
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from mailing.models import Email, MailingSetting
+from mailing.models import Email, MailingSetting, Client
 
 
 # CRUD для модели Email
@@ -54,6 +54,33 @@ class MailingSettingUpdateView(UpdateView):
 class MailingSettingDeleteView(DeleteView):
     model = MailingSetting
     success_url = reverse_lazy('mailing:setting_list')
+#########################################################################
+
+
+# CRUD для модели Client
+class ClientCreateView(CreateView):
+    model = Client
+    fields = ['name', 'surname', 'patrony', 'email', 'comment']
+    success_url = reverse_lazy('mailing:client_list')
+
+
+class ClientListView(ListView):
+    model = Client
+
+
+class ClientDetailView(DetailView):
+    model = Client
+
+
+class ClientUpdateView(UpdateView):
+    model = Client
+    fields = ['name', 'surname', 'patrony', 'email', 'comment']
+    success_url = reverse_lazy('mailing:client_list')
+
+
+class ClientDeleteView(DeleteView):
+    model = Client
+    success_url = reverse_lazy('mailing:client_list')
 #########################################################################
 
 def report(request):
