@@ -9,11 +9,12 @@
                     <div class="card-body">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
+
                             {{ form.name.label_tag }}
-                            {{ form.name }}<br><br>
+                            {{ form.name }}
 
                             {{ form.surname.label_tag }}
-                            {{ form.surname }}<br><br>
+                            {{ form.surname }}
 
                             {{ form.patrony.label_tag }}
                             {{ form.patrony }}<br><br>
@@ -21,9 +22,8 @@
                             {{ form.email.label_tag }}
                             {{ form.email }}<br><br>
 
-                            {{ form.comment.label_tag }}
+                            {{ form.comment.label_tag }}<br>
                             {{ form.comment }}<br><br>
-
                             <hr>
                             {% if object %}
                                 <button type="submit" class="btn btn-success">
