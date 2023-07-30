@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="row-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
+
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.name.label_tag }}
+                            {{ form.name }}<br><br>
+
+                            {{ form.surname.label_tag }}
+                            {{ form.surname }}<br><br>
+
+                            {{ form.patrony.label_tag }}
+                            {{ form.patrony }}<br><br>
+
+                            {{ form.email.label_tag }}
+                            {{ form.email }}<br><br>
+
+                            {{ form.comment.label_tag }}
+                            {{ form.comment }}<br><br>
+
+                            <hr>
+                            {% if object %}
+                                <button type="submit" class="btn btn-success">
+                                    Сохранить
+                                </button>
+                                <a href='{% url 'mailing:client_list' %}' class="btn btn-warning">Отмена</a>
+                            {% else %}
+                                <button type="submit" class="btn btn-success">
+                                    Создать
+                                </button>
+                            {% endif %}
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
