@@ -22,7 +22,7 @@
                                     <li>{{ object.surname }} {{ object.name }} {{ object.patrony }}</li>
                                     <li>{{ object.email }}</li>
                                 </ul>
-                                <a href="{% url 'catalog:products_categ' object.id %}" type="button"
+                                <a href="{% url 'mailing:client_view' object.id %}" type="button"
                                    class="btn btn-sm btn-block btn-outline-primary">Подробнее</a>
                             </div>
                         </div>
