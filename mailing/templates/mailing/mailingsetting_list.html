@@ -1,0 +1,50 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <nav class="ms-auto my-2 my-md-0">
+            <a href="{% url 'mailing:setting_create' %}" type="button" style="margin-right: 10px"
+               class="btn btn-md btn-w-50 btn-outline-primary">Создать новую настройку</a>
+
+        </nav>
+        <br>
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Дата запуска</th>
+                    <th>Время запуска</th>
+                    <th>Периодичность</th>
+                    <th>Статус</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{ object.date }}</td>
+                        <td>{{ object.time }}</td>
+                        <td>{{ object.periodicity }}</td>
+                        <td>{{ object.status }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                            <a href="{% url 'mailing:setting_view' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-success">Посмотреть</a>
+                                <a href="{% url 'mailing:setting_update' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-info">Изменить</a>
+                            <a href="{% url 'mailing:setting_delete' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-warning">Удалить</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}

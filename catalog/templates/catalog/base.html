@@ -10,14 +10,16 @@
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
-   {% include 'catalog/includes/inc_catalog_menu.html' %}
+    {% include 'catalog/includes/inc_catalog_menu.html' %}
 </div>
 
 {% block content %}
 
 {% endblock %}
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+
+<footer class="container">
+    <div class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md">
                 SkyStore
@@ -46,7 +48,8 @@
                 </ul>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </div>
 
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>

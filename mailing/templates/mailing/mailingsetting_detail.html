@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><p class="font-weight-bold">Дата и время рассылки</p></th>
+                <th><p class="font-weight-bold">Периодичность</p></th>
+                <th><p class="font-weight-bold">Статус</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ object.date }} {{ object.time }}</td>
+                <td>{{ object.periodicity }}</td>
+                <td>{{ object.status }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

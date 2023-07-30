@@ -22,9 +22,17 @@ class Client(models.Model):
 class MailingSetting(models.Model):
     date = models.DateField(verbose_name='Дата')
     time = models.TimeField(verbose_name='Время')
-    periodicity = models.CharField(max_length=200, verbose_name='Периодичность')
-    status = models.CharField(max_length=200, verbose_name='Статус')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    periodicity = models.CharField(max_length=200, verbose_name='Периодичность', choices=[
+        ('daily', 'раз в день'),
+        ('weekly', 'раз в неделю'),
+        ('monthly', 'раз в месяц')
+    ])
+    status = models.CharField(max_length=200, default='created', verbose_name='Статус', choices=[
+        ('created', 'Создана'),
+        ('in_progress', 'Запущена'),
+        ('completed', 'Завершена')
+    ])
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f'{self.date} {self.time} / {self.periodicity} / {self.status}'
@@ -33,10 +41,11 @@ class MailingSetting(models.Model):
         verbose_name = 'Настройка рассылки'
         verbose_name_plural = 'Настройки рассылки'
 
+
 class Email(models.Model):
     body = models.TextField(verbose_name='Тело письма')
     subject = models.CharField(max_length=200, verbose_name='Тема письма')
-    settings = models.ForeignKey(MailingSetting, on_delete=models.CASCADE)
+    mailing_setting = models.ForeignKey(MailingSetting, on_delete=models.CASCADE,verbose_name='Настройка рассылки')
 
     def __str__(self):
         return self.subject

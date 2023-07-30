@@ -1,0 +1,45 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="row-12" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        <div class="row">
+            <div class="col-6 mt-5">
+                <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
+
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="bg-danger text-white">Хотите удалить эту запись?</div>
+                            <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><p class="font-weight-bold">Дата и время рассылки</p></th>
+                <th><p class="font-weight-bold">Периодичность</p></th>
+                <th><p class="font-weight-bold">Статус</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ object.date }} {{ object.time }}</td>
+                <td>{{ object.periodicity }}</td>
+                <td>{{ object.status }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+                            <button type="submit" class="btn btn-outline-danger">Подтвердить</button>
+                            <a href='{% url 'mailing:setting_list' %}' class="btn btn-outline-secondary">Отмена</a>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="row-12" xmlns="http://www.w3.org/1999/html">
+        <div class="row">
+            <div class="col-6 mt-5">
+                <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
+
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <p>Хотите удалить эту запись - '{{ object.subject }}'?</p>
+                            <button type="submit" class="btn btn-outline-danger">Подтвердить</button>
+                            <a href='{% url 'mailing:email_list' %}' class="btn btn-outline-secondary">Отмена</a>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

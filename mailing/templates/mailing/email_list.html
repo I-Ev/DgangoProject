@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <nav class="ms-auto my-2 my-md-0">
+            <a href="{% url 'mailing:email_create' %}" type="button" style="margin-right: 10px"
+               class="btn btn-md btn-w-50 btn-outline-primary">Создать рассылку</a>
+            <a href="{% url 'mailing:report' %}" type="button"
+               class="btn btn-md btn-w-50 btn btn-secondary">Отчет о рассылках</a>
+
+        </nav>
+        <br>
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Дата начала</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{ object.subject }}</td>
+                        <td>{{ object.settings }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                            <a href="{% url 'mailing:email_view' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-primary">Посмотреть</a>
+                                <a href="{% url 'mailing:email_update' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-warning">Изменить</a>
+                            <a href="{% url 'mailing:email_delete' object.pk %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-outline-danger">Удалить</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}

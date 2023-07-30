@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="row-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="margin-top: 10px; margin-right: 20px; margin-bottom: 30px; margin-left: 40px;">
+
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.subject.label_tag }} <br>
+                            {{ form.subject }}<br><br>
+
+                            {{ form.body.label_tag }}<br>
+                            {{ form.body }}<br>
+                            <hr>
+                            <p class="font-weight-normal">Выберите существующую настройку рассылки или создайте
+                                новую</p>
+                            {{ form.mailing_setting.label_tag }}
+                            {{ form.mailing_setting }}
+
+                            <a href="{% url 'mailing:setting_create' %}" type="button" style="margin-right: 10px"
+                               class="btn btn-sm btn-w-50 btn-info">Новая настройка</a>
+
+                            <br>
+                            <hr>
+                            {% if object %}
+                                <button type="submit" class="btn btn-success">
+                                    Сохранить
+                                </button>
+                                <a href='{% url 'mailing:email_list' %}' class="btn btn-warning">Отмена</a>
+                            {% else %}
+                                <button type="submit" class="btn btn-success">
+                                    Создать
+                                </button>
+                            {% endif %}
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
