@@ -9,3 +9,10 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
         # fields = ('name', 'description', 'price', 'category')
         # exclude = ('id', 'date_created', 'date_updated', 'is_active')
+
+
+
+class VersionForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
