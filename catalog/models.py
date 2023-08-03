@@ -40,7 +40,6 @@ class Version(models.Model):
     is_actual_version = models.BooleanField(default=False, verbose_name='Признак актуальной версии')
 
 
-
     def __str__(self):
         return f'{self.product} - {self.name}'
 
