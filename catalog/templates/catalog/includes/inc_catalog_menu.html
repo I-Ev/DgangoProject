@@ -3,20 +3,16 @@
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'catalog:categories' %}">Каталог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'blog:list' %}">Блог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="/contacts/">Контакты</a>
+    <a class="p-2 btn btn-primary align-items-left" href="#" data-bs-toggle="dropdown">Админ</a>
+    <ul class="dropdown-menu" aria-labelledby="dropdown04">
+        <li><a class="dropdown-item" href="{% url 'mailing:email_list' %}">Рассылки</a></li>
+        <li><a class="dropdown-item" href="{% url 'mailing:setting_list' %}">Настройки рассылки</a></li>
+        <li><a class="dropdown-item" href="{% url 'mailing:client_list' %}">Клиенты</a></li>
+    </ul>
 
 
-    <a class="btn btn-secondary p-2 align-items-left" href="{% url 'mailing:email_list' %}">Рассылки</a>
+    <!--    <a class="btn btn-secondary p-2 align-items-left" href="{% url 'mailing:email_list' %}">Рассылки</a>-->
 
-{#    <div class="btn-group">#}
-{#        <a type="button" class="btn btn-secondary dropdown" data-toggle="dropdown" aria-haspopup="true"#}
-{#                aria-expanded="false">#}
-{#            Админ#}
-{#        </a>#}
-{#        <div class="dropdown-menu dropdown-menu-right">#}
-{#            <a class="dropdown-item" href="{% url 'mailing:email_list' %}">Рассылки</a>#}
-{#            <a class="dropdown-item" href="{% url 'mailing:setting_list' %}">Настройки рассылки</a>#}
-{#            <a class="dropdown-item" href="{% url 'mailing:client_list' %}">Клиенты</a>#}
-{#        </div>#}
-{#    </div>#}
+
 </nav>
 
