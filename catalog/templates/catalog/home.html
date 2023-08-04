@@ -38,10 +38,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="btn btn-group">
-                            <a href="{% url 'catalog:product' object.id %}" type="button"
+                        <div class="btn-group btn-group-sm">
+                            <a href="{% url 'catalog:product' object.id %}" type="button" style="margin-right: 10px"
                                class="btn btn-sm btn-outline-primary">Подробнее</a>
-                            <a href="{% url 'catalog:update_product' object.id %}" type="button"
+                            <a href="{% url 'catalog:update_product' object.id %}" type="button" style="margin-right: 10px"
                                class="btn btn-sm btn-outline-info">Изменить</a>
                         </div>
                         <p class="text-sm-left">{% get_current_version object.id %}</p>
