@@ -3,7 +3,8 @@
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'catalog:categories' %}">Каталог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'blog:list' %}">Блог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="/contacts/">Контакты</a>
-    <a class="p-2 btn btn-primary align-items-left" href="#" data-bs-toggle="dropdown">Админ</a>
+    <a class="p-2 btn btn  btn-primary align-items-left" href="{% url 'users:login' %}">Войти</a>
+    <a class="p-2 btn  btn-dark align-items-left" href="#" data-bs-toggle="dropdown">Админ</a>
     <ul class="dropdown-menu" aria-labelledby="dropdown04">
         <li><a class="dropdown-item" href="{% url 'mailing:email_list' %}">Рассылки</a></li>
         <li><a class="dropdown-item" href="{% url 'mailing:setting_list' %}">Настройки рассылки</a></li>
