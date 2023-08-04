@@ -3,13 +3,14 @@ from django.urls import reverse_lazy
 from pytils.translit import slugify
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
+from mailing.forms import EmailForm, MailingSettingForm
 from mailing.models import Email, MailingSetting, Client
 
 
 # CRUD для модели Email
 class EmailCreateView(CreateView):
     model = Email
-    fields = ['subject', 'body', 'mailing_setting']
+    form_class = EmailForm
 
 
 class EmailListView(ListView):
@@ -22,7 +23,7 @@ class EmailDetailView(DetailView):
 
 class EmailUpdateView(UpdateView):
     model = Email
-    fields = ['subject', 'body', 'mailing_setting']
+    form_class = EmailForm
 
 
 class EmailDeleteView(DeleteView):
@@ -33,7 +34,7 @@ class EmailDeleteView(DeleteView):
 # CRUD для модели MailingSetting
 class MailingSettingCreateView(CreateView):
     model = MailingSetting
-    fields = ['date', 'time', 'periodicity']
+    form_class = MailingSettingForm
     success_url = reverse_lazy('mailing:email_list')
 
 
@@ -47,7 +48,7 @@ class MailingSettingDetailView(DetailView):
 
 class MailingSettingUpdateView(UpdateView):
     model = MailingSetting
-    fields = ['date', 'time', 'periodicity']
+    form_class = MailingSettingForm
     success_url = reverse_lazy('mailing:setting_list')
 
 
