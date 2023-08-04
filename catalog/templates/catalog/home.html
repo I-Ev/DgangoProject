@@ -21,20 +21,31 @@
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h6 class="my-0 font-weight-bolt">{{ object.name|truncatechars:25 }}</h6>
+                    <h6 class="my-0 font-weight-bolt">{{ object.name|truncatechars:24 }}</h6>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ object.description|truncatechars:45 }}</li>
-                    </ul>
-                    <a href="{% url 'catalog:product' object.id %}" type="button"
-                       class="btn btn-sm btn-outline-primary">Подробнее</a>
-                    <a href="{% url 'catalog:update_product' object.id %}" type="button"
-                       class="btn btn-sm btn-outline-info">Изменить</a>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ object.image|mediapath }}" style="max-width: 70%">
+                        </div>
+                        <div class="col-8">
+                            {{ object.description|truncatechars:45 }}
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="card-footer">
-
-                    <p class="text-sm-left">{% get_current_version object.id %}</p>
+                    <div class="row">
+                        <div class="btn btn-group">
+                            <a href="{% url 'catalog:product' object.id %}" type="button"
+                               class="btn btn-sm btn-outline-primary">Подробнее</a>
+                            <a href="{% url 'catalog:update_product' object.id %}" type="button"
+                               class="btn btn-sm btn-outline-info">Изменить</a>
+                        </div>
+                        <p class="text-sm-left">{% get_current_version object.id %}</p>
+                    </div>
 
                 </div>
             </div>
