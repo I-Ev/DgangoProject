@@ -3,7 +3,19 @@
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'catalog:categories' %}">Каталог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="{% url 'blog:list' %}">Блог</a>
     <a class="p-2 btn btn-outline-primary align-items-left" href="/contacts/">Контакты</a>
-    <a class="p-2 btn btn  btn-primary align-items-left" href="{% url 'users:login' %}">Войти</a>
+
+    {% if user.is_authenticated %}
+    <a class="p-2 btn  btn-outline-warning align-items-left" href="{% url 'users:profile' %}">Профиль</a>
+    <a class="p-2 btn  btn-outline-warning align-items-left" href="{% url 'users:logout' %}">Выйти</a>
+    {% else %}
+    <a class="p-2 btn  btn-primary align-items-left" href="#" data-bs-toggle="dropdown">Войти</a>
+    <ul class="dropdown-menu" aria-labelledby="dropdown04">
+        <li><a class="dropdown-item" href="{% url 'users:login' %}">Авторизация</a></li>
+        <li><a class="dropdown-item" href="{% url 'users:register' %}">Регистрация</a></li>
+        {% endif %}
+    </ul>
+
+
     <a class="p-2 btn  btn-dark align-items-left" href="#" data-bs-toggle="dropdown">Админ</a>
     <ul class="dropdown-menu" aria-labelledby="dropdown04">
         <li><a class="dropdown-item" href="{% url 'mailing:email_list' %}">Рассылки</a></li>
