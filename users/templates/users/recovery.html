@@ -9,15 +9,24 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"> Авторизация</h5>
+                        <h5 class="card-title"> Заявка на сброс пароля</h5>
                     </div>
 
                     <div class="card-body">
 
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button class="btn-outline-primary">Войти</button>
-                        <a class="btn-sm btn-outline-warning" href="{% url 'users:recovery' %}">Cбросить пароль</a>
+                        <p>
+                            <label for="id_username">Почта:</label>
+                            <input type="text" name="email" autofocus="" autocapitalize="none"
+                                   autocomplete="username" maxlength="254" class="form-control" required=""
+                                   id="id_email">
+
+
+                        </p>
+
+                        <a class="btn btn-outline-warning" href="{% url 'users:recovery' %}">Cброс пароля</a>
+
+
                     </div>
                     <div class="card-footer"></div>
                 </div>

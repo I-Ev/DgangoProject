@@ -4,9 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-tzdata = "==2023.3"
-django = "==4.2.3"
+tzdata = "*"
+django = "*"
 pytils = "*"
+asgiref = "*"
+sqlparse = "*"
+psycopg2 = "*"
+pillow = "*"
+ipython = "*"
 
 [dev-packages]
 

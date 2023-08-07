@@ -8,12 +8,13 @@
     <p class="lead">{{ sub_title }}</p>
 </div>
 
+{% if user.is_authenticated %}
 <div class="container">
     <a class="p-2 btn btn-primary align-items-left" style="margin-bottom: 10px"
        href="{% url 'catalog:create_product' %}">Добавить
         продукт</a>
 </div>
-
+{% endif %}
 
 <div class="container">
     <div class="row text-center">
@@ -41,8 +42,10 @@
                         <div class="btn-group btn-group-sm">
                             <a href="{% url 'catalog:product' object.id %}" type="button" style="margin-right: 10px"
                                class="btn btn-sm btn-outline-primary">Подробнее</a>
+                            {% if user.is_authenticated %}
                             <a href="{% url 'catalog:update_product' object.id %}" type="button" style="margin-right: 10px"
                                class="btn btn-sm btn-outline-info">Изменить</a>
+                            {% endif %}
                         </div>
                         <p class="text-sm-left">{% get_current_version object.id %}</p>
                     </div>

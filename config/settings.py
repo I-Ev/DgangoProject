@@ -15,8 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -27,7 +25,6 @@ SECRET_KEY = 'django-insecure-sn#*dstb_qa4xx7h^8v^u(n*kd8s%cf-qtwqe7y7)1he&29_!+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -75,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -87,7 +83,6 @@ DATABASES = {
         'PASSWORD': '0000',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -107,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -118,7 +112,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -133,7 +126,6 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -143,3 +135,18 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.rambler.ru'
+EMAIL_PORT = 587 #smtp.rambler.ru - 465, 587, 25, 2525 (шифрование: ssl/tls/startls/без шифрования)
+EMAIL_HOST_USER = 'TestSkyPRO@rambler.ru'
+EMAIL_HOST_PASSWORD = 'TestSkyPRO2023'
+
+EMAIL_USE_TLS = True
+
+EMAIL_SSL_CERTFILE = None
+EMAIL_SSL_KEYFILE = None
+
+

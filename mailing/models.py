@@ -1,6 +1,6 @@
 from django.db import models
 
-from catalog.models import NULLABLE
+from utils import NULLABLE
 
 
 # Create your models here.

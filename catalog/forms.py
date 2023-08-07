@@ -3,7 +3,6 @@ from django import forms
 from catalog.models import Product
 
 
-
 class StyleFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,15 +14,14 @@ class StyleFormMixin:
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
-
     stop_words = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+    request = None
 
     class Meta:
         model = Product
-        fields = '__all__'
-        # fields = ('name', 'description', 'price', 'category')
+        # fields = '__all__'
+        fields = ('name', 'description', 'price', 'category', 'image')
         # exclude = ('id', 'date_created', 'date_updated', 'is_active')
-
 
 
 
