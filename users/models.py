@@ -15,18 +15,18 @@ class User(AbstractUser):
     is_email_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=100, **NULLABLE)
 
-    def generate_verification_token(self):
-        token = get_random_string(length=16)
-        self.verification_token = token
-        self.save()
-
-    def verify_email(self, token):
-        if self.verification_token == token:
-            self.is_email_verified = True
-            self.verification_token = None
-            self.save()
-            return True
-        return False
+    # def generate_verification_token(self):
+    #     token = get_random_string(length=16)
+    #     self.verification_token = token
+    #     self.save()
+    #
+    # def verify_email(self, token):
+    #     if self.verification_token == token:
+    #         self.is_email_verified = True
+    #         self.verification_token = None
+    #         self.save()
+    #         return True
+    #     return False
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

@@ -10,13 +10,13 @@ from config import settings
 NULLABLE = {'blank': True, 'null': True}
 
 
-def send_mail_verification(request, user):
+def send_mail_verification(request, user, token):
     current_site = get_current_site(request)
     context = {
         "domain": current_site.domain,
         "user": user,
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-        "token": token_generator.make_token(user),
+        "token": token,
     }
 
     message = render_to_string(

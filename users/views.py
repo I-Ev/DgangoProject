@@ -33,7 +33,10 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        send_mail_verification(self.request, user)
+        token = token_generator.make_token(user)
+        user.verification_token = token
+        user.save()
+        send_mail_verification(self.request, user, token)
         return super().form_valid(form)
 
     # def form_valid(self, form):
@@ -88,12 +91,23 @@ def recovery_page(request):
 class VerifyEmailView(View):
 
     def get(self, request, uidb64, token):
+        print(f'request: {request}')
+        print(f'uidb64: {uidb64}')
         user = self.get_user(uidb64)
-        if user is not None and token_generator.check_token(user, token):
+        print(user)
+        print(f'user is not None = {user is not None}')
+        print(f'token: {token}')
+        print(f'user.verification_token: {user.verification_token}')
+        print(f'token == user.verification_token: {user.verification_token == token}')
+
+        if user is not None and token == user.verification_token:
             user.is_email_verified = True
+            user.verification_token = None
             user.save()
-            login(request, user)
-            return redirect('home/')
+            return redirect('users:succes_page')
+            # HttpResponse('Email успешно подтвержден, теперь вы можете зайти на сайт под своим логином и паролем')
+            # login(request, user)
+            # return recovery_page('catalog:home')
 
         return HttpResponse('Неверная ссылка, скорее всего она уже устарела или пользователь не найден')
 
@@ -118,3 +132,7 @@ class VerifyEmailView(View):
 
 def get_info_page(request):
     return render(request, 'users/info_page.html')
+
+
+def get_success_email_page(request):
+    return render(request, 'users/success_email_verify.html')
