@@ -20,6 +20,4 @@ urlpatterns = [
     path("password_reset/", reset_password, name="recovery"),
     path("password_reset_done/", get_reset_done, name="recovery_done"),
 
-    # path('recovery/', recovery_page, name='recovery_page'),
-    # path('recovery/', get_new_password, name='recovery'),
 ]
