@@ -16,7 +16,7 @@ urlpatterns = [
     path('info_page/', get_info_page, name='info_page'),
 
     # path('recovery/', recovery_page, name='recovery_page'),
-    # path('recovery/', get_new_password, name='recovery'),
+    path('recovery/', get_new_password, name='recovery'),
 ]
 
 

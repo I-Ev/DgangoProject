@@ -76,25 +76,6 @@ def get_new_password(request):
     request.user.save()
     return redirect(reverse_lazy('catalog:home'))
 
-    # if request.method == 'POST':
-    #     email = request.POST.get('email')
-    #     if not email:
-    #         return HttpResponseBadRequest('Не указан email')
-    #
-    #     user = User.objects.get(email=email)
-    #     new_password = user.objects.make_random_password()
-    #     user.set_password(new_password)
-    #     user.save()
-    #
-    #     send_mail(
-    #         'Сброс пароля',
-    #         'Ваш новый пароль: {0}'.format(new_password),
-    #         EMAIL_HOST_USER,
-    #         [email]
-    #     )
-    #
-    #     return HttpResponseRedirect('login')
-
 
 class LoginView_Mixin(LoginView):
     form_class = AuthenticationForm_Mixin
@@ -114,7 +95,7 @@ class VerifyEmailView(View):
             login(request, user)
             return redirect('home/')
 
-        return HttpResponse('Неверная ссылка, скорее всего она уже устарела')
+        return HttpResponse('Неверная ссылка, скорее всего она уже устарела или пользователь не найден')
 
 
     @staticmethod
@@ -133,20 +114,6 @@ class VerifyEmailView(View):
             user = None
         return user
 
-
-    # model = User
-    # template_name = 'users/token_validation.html'
-    #
-    # def get(self, request, *args, **kwargs):
-    #     token = kwargs.get('token')
-    #     try:
-    #         user = User.objects.get(verification_token=token)
-    #         user.is_email_verified = True
-    #         user.verification_token = None
-    #         user.save()
-    #         return HttpResponse('Email подтвержден')
-    #     except User.DoesNotExist:
-    #         return HttpResponse('Неверная ссылка')
 
 
 def get_info_page(request):

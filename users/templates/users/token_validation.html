@@ -1,6 +1,6 @@
 {% autoescape off %}
 Уважаемый, {{ user.get_username }},
-Для завершения регистрации переидите по ссылке
+Для завершения регистрации необходимо перейти по ссылке
 http://{{ domain }}{% url 'users:verify' uidb64=uid token=token %}
 
 
