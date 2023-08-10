@@ -1,29 +1,40 @@
 import random
 
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
+from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, UpdateView, DetailView
+from django.contrib.auth.tokens import default_token_generator as token_generator
 import secrets
 
 from config import settings
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin
 from users.models import User
+from utils import send_mail_verification
 
+User = get_user_model()
 
 class RegisterView(CreateView):
     model = User
     form_class = UserRegisterForm
     template_name = 'users/register.html'
+
     success_url = reverse_lazy('users:info_page')
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        send_mail_verification(self.request, user)
+        return super().form_valid(form)
 
     # def form_valid(self, form):
     #     user = form.save(commit=False)
@@ -94,19 +105,48 @@ def recovery_page(request):
 
 
 class VerifyEmailView(View):
-    model = User
-    template_name = 'users/token_validation.html'
 
-    def get(self, request, *args, **kwargs):
-        token = kwargs.get('token')
-        try:
-            user = User.objects.get(verification_token=token)
+    def get(self, request, uidb64, token):
+        user = self.get_user(uidb64)
+        if user is not None and token_generator.check_token(user, token):
             user.is_email_verified = True
-            user.verification_token = None
             user.save()
-            return HttpResponse('Email подтвержден')
-        except User.DoesNotExist:
-            return HttpResponse('Неверная ссылка')
+            login(request, user)
+            return redirect('home/')
+
+        return HttpResponse('Неверная ссылка, скорее всего она уже устарела')
+
+
+    @staticmethod
+    def get_user(uidb64):
+        try:
+            # urlsafe_base64_decode() decodes to bytestring
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            User.DoesNotExist,
+            ValidationError,
+        ):
+            user = None
+        return user
+
+
+    # model = User
+    # template_name = 'users/token_validation.html'
+    #
+    # def get(self, request, *args, **kwargs):
+    #     token = kwargs.get('token')
+    #     try:
+    #         user = User.objects.get(verification_token=token)
+    #         user.is_email_verified = True
+    #         user.verification_token = None
+    #         user.save()
+    #         return HttpResponse('Email подтвержден')
+    #     except User.DoesNotExist:
+    #         return HttpResponse('Неверная ссылка')
 
 
 def get_info_page(request):

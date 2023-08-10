@@ -7,13 +7,16 @@ from users.views import RegisterView, ProfileView, get_new_password, LoginView_M
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path('', LoginView_Mixin.as_view(template_name='users/login.html'), name='login'),
+    path('login/', LoginView_Mixin.as_view(template_name='users/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    path('recovery/', recovery_page, name='recovery_page'),
-    path('verify_email/', VerifyEmailView.as_view(), name='verify'),
+
+    path('verify_email/<uidb64>/<token>/', VerifyEmailView.as_view(), name='verify'),
     path('info_page/', get_info_page, name='info_page'),
 
-    path('recovery/', get_new_password, name='recovery'),
+    # path('recovery/', recovery_page, name='recovery_page'),
+    # path('recovery/', get_new_password, name='recovery'),
 ]
+
+

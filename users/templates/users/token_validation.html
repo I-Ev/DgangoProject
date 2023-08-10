@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>СТРАНИЦА ВАЛИДАЦИИ EMAIL</title>
-</head>
-<body>
+{% autoescape off %}
+Уважаемый, {{ user.get_username }},
+Для завершения регистрации переидите по ссылке
+http://{{ domain }}{% url 'users:verify' uidb64=uid token=token %}
 
-</body>
-</html>
+
+{% endautoescape %}
