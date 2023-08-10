@@ -4,7 +4,7 @@ from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
@@ -18,7 +18,7 @@ import secrets
 
 from config import settings
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin
+from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin, MySetPasswordForm
 from users.models import User
 from utils import send_mail_verification
 
@@ -112,7 +112,35 @@ def get_success_email_page(request):
 
 class MyPasswordResetView(PasswordResetView):
     template_name = "users/recovery.html"
+    success_url = reverse_lazy("users:recovery_done")
+
+    def form_valid(self, form):
+
+        return super().form_valid(form)
 
 
-class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = "users/recovery_confirm.html"
+def get_reset_done(request):
+    return render(request, 'users/success_reset_password.html')
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            new_password = ''.join([str(random.randint(0, 9)) for _ in range(8)])
+            user.set_password(new_password)
+            user.save()
+
+            subject = 'Password Reset'
+            message = f'Your new password: {new_password}'
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list = [email]
+            send_mail(subject, message, from_email, recipient_list)
+
+            return redirect('users:recovery_done')  # Redirect to a success page
+        except User.DoesNotExist:
+            error_message = 'User with this email does not exist'
+            return render(request, 'users/reset_password.html', {'error_message': error_message})
+
+    return render(request, 'users/reset_password.html')
