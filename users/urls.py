@@ -1,9 +1,9 @@
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, PasswordResetConfirmView
 from django.urls import path
 
 from users.apps import UsersConfig
-from users.views import RegisterView, ProfileView, get_new_password, LoginView_Mixin, recovery_page, get_info_page, \
-    VerifyEmailView, get_success_email_page
+from users.views import RegisterView, ProfileView, LoginView_Mixin, get_info_page, \
+    VerifyEmailView, get_success_email_page, MyPasswordResetView
 
 app_name = UsersConfig.name
 
@@ -17,6 +17,9 @@ urlpatterns = [
     path('info_page/', get_info_page, name='info_page'),
     path('success_email_verify/', get_success_email_page, name='succes_page'),
 
+    path("password_reset/", MyPasswordResetView.as_view(), name="recovery"),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm')
+
     # path('recovery/', recovery_page, name='recovery_page'),
-    path('recovery/', get_new_password, name='recovery'),
+    # path('recovery/', get_new_password, name='recovery'),
 ]

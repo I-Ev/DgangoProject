@@ -4,7 +4,7 @@ from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
@@ -24,6 +24,7 @@ from utils import send_mail_verification
 
 User = get_user_model()
 
+
 class RegisterView(CreateView):
     model = User
     form_class = UserRegisterForm
@@ -38,22 +39,6 @@ class RegisterView(CreateView):
         user.save()
         send_mail_verification(self.request, user, token)
         return super().form_valid(form)
-
-    # def form_valid(self, form):
-    #     user = form.save(commit=False)
-    #     user.generate_verification_token()  # Генерация токена
-    #     user.save()
-    #
-    #     token = user.verification_token
-    #     verification_url = self.request.build_absolute_uri(reverse('users:verify')) + f'?token={token}'
-    #
-    #     send_mail(
-    #         subject='Подтвердите email',
-    #         message=f'Для подтверждения email перейдите на {verification_url}',
-    #         from_email=settings.EMAIL_HOST_USER,
-    #         recipient_list=[user.email],
-    #     )
-    #     return super().form_valid(form)
 
 
 class ProfileView(UpdateView):
@@ -91,26 +76,14 @@ def recovery_page(request):
 class VerifyEmailView(View):
 
     def get(self, request, uidb64, token):
-        print(f'request: {request}')
-        print(f'uidb64: {uidb64}')
         user = self.get_user(uidb64)
-        print(user)
-        print(f'user is not None = {user is not None}')
-        print(f'token: {token}')
-        print(f'user.verification_token: {user.verification_token}')
-        print(f'token == user.verification_token: {user.verification_token == token}')
-
         if user is not None and token == user.verification_token:
             user.is_email_verified = True
             user.verification_token = None
             user.save()
             return redirect('users:succes_page')
-            # HttpResponse('Email успешно подтвержден, теперь вы можете зайти на сайт под своим логином и паролем')
-            # login(request, user)
-            # return recovery_page('catalog:home')
 
         return HttpResponse('Неверная ссылка, скорее всего она уже устарела или пользователь не найден')
-
 
     @staticmethod
     def get_user(uidb64):
@@ -119,15 +92,14 @@ class VerifyEmailView(View):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
         except (
-            TypeError,
-            ValueError,
-            OverflowError,
-            User.DoesNotExist,
-            ValidationError,
+                TypeError,
+                ValueError,
+                OverflowError,
+                User.DoesNotExist,
+                ValidationError,
         ):
             user = None
         return user
-
 
 
 def get_info_page(request):
@@ -136,3 +108,11 @@ def get_info_page(request):
 
 def get_success_email_page(request):
     return render(request, 'users/success_email_verify.html')
+
+
+class MyPasswordResetView(PasswordResetView):
+    template_name = "users/recovery.html"
+
+
+class MyPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "users/recovery_confirm.html"
