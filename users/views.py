@@ -71,7 +71,7 @@ class VerifyEmailView(View):
         if user is not None and token == user.verification_token:
             user.is_email_verified = True
             user.verification_token = None
-            user.save()
+            user.save(update_fields=['is_email_verified', 'verification_token'])
             return redirect('users:succes_page')
 
         return HttpResponse('Неверная ссылка, скорее всего она уже устарела или пользователь не найден')
