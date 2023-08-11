@@ -150,10 +150,13 @@ EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+CACHE_ENABLE = True
+
+if CACHE_ENABLE:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+        }
     }
-}
 

@@ -3,34 +3,35 @@
 
 {% block content %}
 
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">{{ object.name }}</h1>
-    </div>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ object.name }}</h1>
+</div>
 
-    <div class="container">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-4">
+<div class="container">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-4">
 
-                    <img src="{{ object.image|mediapath }}" style="max-width: 100%">
+                <img src="{{ object.image|mediapath }}" style="max-width: 100%">
 
-                </div>
-                <div class="col-8">
-                    <div class="card mb-4 box-shadow">
-                        <div class="card-body">
-                            <samp>{{ object.description }}</samp><br>
+            </div>
+            <div class="col-8">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <samp>{{ object.description }}</samp><br>
 
-                        </div>
                     </div>
                 </div>
-<p class="text-left">Автор: {{ object.user_created.first_name }} {{ object.user_created.last_name }} ({{ object.user_created.email }})</p>
             </div>
-
-
+            <p class="text-left">Автор: {{ object.user_created.first_name }} {{ object.user_created.last_name }} ({{
+                object.user_created.email }})</p>
         </div>
 
 
     </div>
+
+
+</div>
 
 
 {% endblock %}
