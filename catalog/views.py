@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Version
+from catalog.services import get_cached_categories_list
 from config import settings
 
 
@@ -75,6 +76,12 @@ class ProductsCategListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Получение списка категорий через сервисную функцию с кэшированием
+        category_list = get_cached_categories_list()
+        context['category_list'] = category_list
+
+        # Добавление данных к контексту
         category = Category.objects.get(id=self.kwargs['category_id'])
         context['title'] = category.name
         return context
