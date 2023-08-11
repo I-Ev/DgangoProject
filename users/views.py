@@ -1,24 +1,21 @@
 import random
-
-from django.contrib.auth import logout, get_user_model, login
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.tokens import default_token_generator as token_generator
-import secrets
+
 
 from config import settings
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin, MySetPasswordForm
+from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin
 from users.models import User
 from utils import send_mail_verification
 
