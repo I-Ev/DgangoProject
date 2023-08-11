@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -5,6 +6,8 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Version
+from catalog.services import get_cached_categories_list
+from config import settings
 
 
 class HomeView(ListView):
@@ -19,6 +22,7 @@ class HomeView(ListView):
         return context
 
 
+
 def contacts(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -31,6 +35,26 @@ def contacts(request):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product.html'
+
+    def get_context_data(self, **kwargs):
+        cache_key = f'product_{self.object.pk}_context'
+
+        if settings.CACHE_ENABLE:
+            # Попробовать получить данные из кэша
+            context = cache.get(cache_key)
+
+            if context is None:
+                # Если данные не найдены в кэше, выполнить обычную логику получения контекста
+                context = super().get_context_data(**kwargs)
+
+            # Сохранить контекст в кэше на определенное время (например, 15 минут)
+            cache.set(cache_key, context, 60 * 15)
+
+        else:
+            context = super().get_context_data(**kwargs)
+            cache.set(cache_key, context, 60 * 15)
+
+        return context
 
 
 class CategoriesListView(ListView):
@@ -52,6 +76,12 @@ class ProductsCategListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # Получение списка категорий через сервисную функцию с кэшированием
+        category_list = get_cached_categories_list()
+        context['category_list'] = category_list
+
+        # Добавление данных к контексту
         category = Category.objects.get(id=self.kwargs['category_id'])
         context['title'] = category.name
         return context
