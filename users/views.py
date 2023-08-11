@@ -1,20 +1,16 @@
 import random
-from django.contrib.auth import logout, get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.views import LoginView, PasswordResetView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.tokens import default_token_generator as token_generator
-
 
 from config import settings
-from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm, AuthenticationForm_Mixin
 from users.models import User
 from utils import send_mail_verification
@@ -31,10 +27,7 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        token = token_generator.make_token(user)
-        user.verification_token = token
-        user.save()
-        send_mail_verification(self.request, user, token)
+        send_mail_verification(self.request, user)
         return super().form_valid(form)
 
 
@@ -47,23 +40,24 @@ class ProfileView(UpdateView):
         return self.request.user
 
 
-@login_required
-def get_new_password(request):
-    new_password = ''.join([str(random.randint(0, 9)) for _ in range(8)])
-    send_mail(
-        'Сброс пароля',
-        'Ваш новый пароль: {0}'.format(new_password),
-        EMAIL_HOST_USER,
-        request.user.email
-    )
-    logout(request)
-    request.user.set_password(new_password)
-    request.user.save()
-    return redirect(reverse_lazy('catalog:home'))
-
 
 class LoginView_Mixin(LoginView):
     form_class = AuthenticationForm_Mixin
+
+    def form_valid(self, form):
+        self.user = form.get_user()
+
+        if not self.user.is_authenticated:
+            # Если пользователь не аутентифицирован, перенаправляем его на страницу входа.
+            return HttpResponseRedirect(reverse_lazy('users:login'))
+
+        if not self.user.is_email_verified:
+            send_mail_verification(self.request, self.user)
+            logout(self.request)
+            return redirect(reverse_lazy('users:info_page'))
+
+        login(self.request, self.user)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 def recovery_page(request):
@@ -112,7 +106,6 @@ class MyPasswordResetView(PasswordResetView):
     success_url = reverse_lazy("users:recovery_done")
 
     def form_valid(self, form):
-
         return super().form_valid(form)
 
 
