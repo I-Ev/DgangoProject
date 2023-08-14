@@ -154,7 +154,8 @@ EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
 
 
-CACHE_ENABLE = True
+CACHE_ENABLE = False
+
 
 if CACHE_ENABLE:
     CACHES = {
@@ -164,3 +165,6 @@ if CACHE_ENABLE:
         }
     }
 
+CRON_JOBS = [
+    ('0 0 * * *', 'mailing.tasks.start_mailing'),
+]

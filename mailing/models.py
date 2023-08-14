@@ -32,7 +32,7 @@ class MailingSetting(models.Model):
         ('in_progress', 'Запущена'),
         ('completed', 'Завершена')
     ])
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, **NULLABLE)
+    clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
         return f'{self.date} {self.time} / {self.periodicity} / {self.status}'

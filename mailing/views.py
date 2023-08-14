@@ -35,7 +35,7 @@ class EmailDeleteView(DeleteView):
 class MailingSettingCreateView(CreateView):
     model = MailingSetting
     form_class = MailingSettingForm
-    success_url = reverse_lazy('mailing:email_list')
+    success_url = reverse_lazy('mailing:setting_list')
 
 
 class MailingSettingListView(ListView):

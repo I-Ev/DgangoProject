@@ -13,6 +13,7 @@
                     <th><p class="font-weight-bold">Дата и время рассылки</p></th>
                     <th><p class="font-weight-bold">Периодичность</p></th>
                     <th><p class="font-weight-bold">Статус</p></th>
+                    <th><p class="font-weight-bold">Список клиентов</p></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,6 +21,13 @@
                     <td>{{ object.date }} {{ object.time }}</td>
                     <td>{{ object.periodicity }}</td>
                     <td>{{ object.status }}</td>
+                    <td>
+                        {% for client in object.clients.all %}
+                        {{ client }}
+                        <br>
+                        {% endfor %}
+                    </td>
+
                 </tr>
                 </tbody>
             </table>
