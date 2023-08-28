@@ -22,4 +22,4 @@ class EmailForm(StyleFormMixin, forms.ModelForm):
 class MailingSettingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingSetting
-        fields = ('date', 'time', 'periodicity', 'clients')
+        fields = ('datetime', 'periodicity', 'clients')

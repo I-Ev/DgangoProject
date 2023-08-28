@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_crontab',
+
     'catalog.apps.CatalogConfig',
     'blog.apps.BlogConfig',
     'mailing.apps.MailingConfig',
