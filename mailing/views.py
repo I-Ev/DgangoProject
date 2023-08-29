@@ -139,26 +139,6 @@ class ClientDeleteView(DeleteView):
 
 
 #########################################################################
-
-def report(request):
-    pass
-#
-#     emails = Email.objects.all()
-#     email_settings = MailingSetting.objects.filter(status__neq='created')
-#
-#     context = {
-#         'email_list': Email.objects.filter(status__neq='created')
-#     }
-#
-#     return render(request, 'mailing/report.html')
-#
-#
-# def report(request):
-#     return render(request, 'mailing/report.html', {
-#         'email_list': Email.objects.filter(status__neq='created')
-#     })
-#
-#
-# def report(request):
-#     email_list = Email.objects.filter(status__neq='created')
-#     return render(request, 'mailing/report.html', {'email_list': email_list})
+# Отчет о проведенных рассылках
+class report(ListView):
+    model = SendingTry

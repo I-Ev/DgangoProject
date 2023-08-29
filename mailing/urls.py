@@ -1,7 +1,7 @@
 from django.urls import path
 
 from mailing.apps import MailingConfig
-from mailing.tasks import setup_cronjob
+
 
 from mailing.views import report, EmailCreateView, EmailUpdateView, EmailDeleteView, EmailDetailView, \
     EmailListView, MailingSettingCreateView, MailingSettingUpdateView, MailingSettingDeleteView, \
@@ -9,7 +9,7 @@ from mailing.views import report, EmailCreateView, EmailUpdateView, EmailDeleteV
     MailingSettingListView, ClientListView, ClientCreateView, ClientDetailView, ClientUpdateView, ClientDeleteView
 
 app_name = MailingConfig.name
-setup_cronjob()
+
 
 urlpatterns = [
     path('email/', EmailListView.as_view(), name='email_list'),
@@ -30,6 +30,6 @@ urlpatterns = [
     path('client/edit/<int:pk>/', ClientUpdateView.as_view(), name='client_update'),
     path('client/delete/<int:pk>', ClientDeleteView.as_view(), name='client_delete'),
 
-    path('report/', report, name='report'),
+    path('report/', report.as_view(), name='report'),
 
 ]
