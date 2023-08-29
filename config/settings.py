@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_crontab',
+
     'catalog.apps.CatalogConfig',
     'blog.apps.BlogConfig',
     'mailing.apps.MailingConfig',
@@ -154,7 +156,8 @@ EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
 
 
-CACHE_ENABLE = True
+CACHE_ENABLE = False
+
 
 if CACHE_ENABLE:
     CACHES = {
@@ -164,3 +167,28 @@ if CACHE_ENABLE:
         }
     }
 
+CRON_JOBS = [
+    ('0 0 * * *', 'mailing.tasks.start_mailing'),
+]
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}

@@ -3,7 +3,9 @@
 
 {% block content %}
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" xmlns="http://www.w3.org/1999/html">
+
+    <!--    берем название продукта из кэша, переменная задана в контроллере ProductDetailView -->
     <h1 class="display-4">{{ object.name }}</h1>
 </div>
 
@@ -18,13 +20,17 @@
             <div class="col-8">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <samp>{{ object.description }}</samp><br>
+                        <!--    берем описание продукта из кэша, переменная задана в контроллере ProductDetailView -->
+                        <samp> {{ object.description }} </samp><br>
 
                     </div>
                 </div>
             </div>
+            {% if object.user_created %}
             <p class="text-left">Автор: {{ object.user_created.first_name }} {{ object.user_created.last_name }} ({{
-                object.user_created.email }})</p>
+                object.user_created.email}})</p>
+            <p class="text-left">Дата создания: {{ object.date_created }}</p>
+            {% endif %}
         </div>
 
 

@@ -1,0 +1,34 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Дата и время рассылки</th>
+                    <th>Тема рассылки</th>
+                    <th>Статус</th>
+                    <th>Email клиента</th>
+                    <th>Статус сервера</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ object.datetime }}</td>
+                        <td>{{ object.email.subject }}</td>
+                        <td>{{ object.status }}</td>
+                        <td>{{ object.client.email }}</td>
+                        <td>{{ object.server_status }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

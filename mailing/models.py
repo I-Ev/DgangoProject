@@ -20,8 +20,7 @@ class Client(models.Model):
 
 
 class MailingSetting(models.Model):
-    date = models.DateField(verbose_name='Дата')
-    time = models.TimeField(verbose_name='Время')
+    datetime = models.DateTimeField(verbose_name='Дата')
     periodicity = models.CharField(max_length=200, verbose_name='Периодичность', choices=[
         ('daily', 'раз в день'),
         ('weekly', 'раз в неделю'),
@@ -32,10 +31,10 @@ class MailingSetting(models.Model):
         ('in_progress', 'Запущена'),
         ('completed', 'Завершена')
     ])
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, **NULLABLE)
+    clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
-        return f'{self.date} {self.time} / {self.periodicity} / {self.status}'
+        return f'{self.datetime} / {self.periodicity} / {self.status}'
 
     class Meta:
         verbose_name = 'Настройка рассылки'
@@ -56,15 +55,15 @@ class Email(models.Model):
 
 
 class SendingTry(models.Model):
-    date = models.DateField(verbose_name='Дата попытки')
-    time = models.TimeField(verbose_name='Время попытки')
-    status = models.CharField(max_length=200, verbose_name='Статус')
+    datetime = models.DateTimeField(verbose_name='Дата и время попытки', auto_now_add=True)
+    status = models.CharField(max_length=200, verbose_name='Статус попытки')
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, related_name='logs')
     server_status = models.CharField(**NULLABLE, max_length=200, verbose_name='Статус сервера')
     email = models.ForeignKey(Email, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.date} {self.time} / {self.status} / {self.server_status}'
+        return f'{self.datetime} / {self.status} / {self.server_status}'
 
     class Meta:
-        verbose_name = 'Рассылка'
-        verbose_name_plural = 'Рассылки'
+        verbose_name = 'Попытка рассылки'
+        verbose_name_plural = 'Попытки рассылки'

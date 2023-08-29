@@ -22,7 +22,6 @@ class HomeView(ListView):
         return context
 
 
-
 def contacts(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -36,25 +35,26 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product.html'
 
-    def get_context_data(self, **kwargs):
-        cache_key = f'product_{self.object.pk}_context'
-
-        if settings.CACHE_ENABLE:
-            # Попробовать получить данные из кэша
-            context = cache.get(cache_key)
-
-            if context is None:
-                # Если данные не найдены в кэше, выполнить обычную логику получения контекста
-                context = super().get_context_data(**kwargs)
-
-            # Сохранить контекст в кэше на определенное время (например, 15 минут)
-            cache.set(cache_key, context, 60 * 15)
-
-        else:
-            context = super().get_context_data(**kwargs)
-            cache.set(cache_key, context, 60 * 15)
-
-        return context
+    # если кэшировать не на уровне контроллера:
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     product = self.object
+    #
+    #     name_key = f'product_{product.id}_name'
+    #     desc_key = f'product_{product.id}_desc'
+    #
+    #     context['product_name'] = cache.get(name_key)
+    #     if context['product_name'] is None:
+    #         context['product_name'] = product.name
+    #         cache.set(name_key, context['product_name'], 60 * 15)
+    #
+    #     context['product_desc'] = cache.get(desc_key)
+    #     if context['product_desc'] is None:
+    #         context['product_desc'] = product.description
+    #         cache.set(desc_key, context['product_desc'], 60 * 15)
+    #
+    #     return context
 
 
 class CategoriesListView(ListView):

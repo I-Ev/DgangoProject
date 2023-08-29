@@ -5,7 +5,7 @@ from mailing.models import MailingSetting, Email, Client
 
 @admin.register(MailingSetting)
 class MailingSettingAdmin(admin.ModelAdmin):
-    list_display = ['date', 'time', 'periodicity', 'status']
+    list_display = ['datetime', 'periodicity', 'status']
 
 
 @admin.register(Email)
