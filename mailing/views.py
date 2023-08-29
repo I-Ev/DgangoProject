@@ -23,7 +23,7 @@ class EmailCreateView(CreateView):
             # Запускаем рассылку сразу
             settings = instance.mailing_setting
             settings.status = 'Запущена'
-            settings.save()
+            settings.save(update_fields=['status'])
 
             clients = settings.clients.all()
             subject = instance.subject
@@ -52,7 +52,7 @@ class EmailCreateView(CreateView):
 
                 # Обновление статуса рассылки
                 settings.status = 'Завершена'
-                settings.save()
+                settings.save(update_fields=['status'])
 
         elif instance.datetime_start > now:
             pass

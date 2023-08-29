@@ -57,7 +57,7 @@ class Email(models.Model):
 class SendingTry(models.Model):
     datetime = models.DateTimeField(verbose_name='Дата и время попытки', auto_now_add=True)
     status = models.CharField(max_length=200, verbose_name='Статус попытки')
-    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, related_name='logs')
     server_status = models.CharField(**NULLABLE, max_length=200, verbose_name='Статус сервера')
     email = models.ForeignKey(Email, on_delete=models.CASCADE)
 
